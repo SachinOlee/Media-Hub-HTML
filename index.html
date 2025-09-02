@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Media Hub — Videos & Audio by Category</title>
+  <style>
+    :root{
+      --bg:#0f172a; /* slate-900 */
+      --panel:#111827; /* gray-900 */
+      --panel-2:#0b1220; /* darker */
+      --muted:#94a3b8; /* slate-400 */
+      --text:#e5e7eb; /* gray-200 */
+      --brand:#22c55e; /* green-500 */
+      --chip:#1f2937; /* gray-800 */
+      --chip-active:#10b981; /* emerald-500 */
+      --chip-text:#cbd5e1; /* slate-300 */
+      --ring: rgba(34,197,94,.35);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,var(--bg),var(--panel-2));color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Ubuntu,"Helvetica Neue",Arial,sans-serif;}
+    .container{max-width:1200px;margin:0 auto;padding:24px}
+
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px}
+    h1{font-size:clamp(22px,3vw,32px);margin:0;letter-spacing:.2px}
+    .tabs{display:inline-flex;background:var(--chip);border-radius:12px;padding:6px}
+    .tab{border:0;background:transparent;color:var(--chip-text);padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600;letter-spacing:.2px}
+    .tab[aria-selected="true"]{background:var(--brand);color:#052e16}
+
+    .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:18px 0}
+    .chips{display:flex;flex-wrap:wrap;gap:8px}
+    .chip{background:var(--chip);border:1px solid #243244;color:var(--chip-text);padding:6px 12px;border-radius:999px;cursor:pointer;font-size:14px}
+    .chip.active{background:var(--chip-active);border-color:transparent;color:#052e16}
+
+    .search{position:relative;flex:1;min-width:220px}
+    .search input{width:100%;padding:12px 14px 12px 38px;border-radius:12px;border:1px solid #223046;background:#0b1321;color:var(--text);outline:none}
+    .search input:focus{box-shadow:0 0 0 4px var(--ring);border-color:transparent}
+    .search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);opacity:.7}
+
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    @media (max-width: 1024px){.grid{grid-template-columns:repeat(8,1fr)}}
+    @media (max-width: 640px){.grid{grid-template-columns:repeat(4,1fr)}}
+
+    .card{grid-column:span 6;background:linear-gradient(180deg,#0c1426,#0b0f1d);border:1px solid #223046;border-radius:16px;overflow:hidden;box-shadow:0 10px 20px rgba(0,0,0,.25)}
+    .card.small{grid-column:span 4}
+    @media (max-width: 1024px){.card{grid-column:span 8}.card.small{grid-column:span 8}}
+    @media (max-width: 640px){.card{grid-column:span 4}.card.small{grid-column:span 4}}
+
+    .thumb{position:relative;aspect-ratio:16/9;background:#0a1020}
+    .thumb iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+    .meta{display:flex;align-items:center;justify-content:space-between;padding:12px 14px}
+    .badge{font-size:12px;background:#102138;border:1px solid #223046;padding:4px 8px;border-radius:999px;color:#a5b4fc}
+    .title{font-weight:700}
+    .hidden{display:none !important}
+    footer{opacity:.7;text-align:center;margin:28px 0}
+    .soft{color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🎬🎧 Media Hub <span class="soft">— Curated Videos & Audio by Category</span></h1>
+      <nav class="tabs" role="tablist" aria-label="Media type switcher">
+        <button class="tab" role="tab" aria-selected="true" data-pane="videos">Videos</button>
+        <button class="tab" role="tab" aria-selected="false" data-pane="audio">Audio</button>
+      </nav>
+    </header>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="chips" id="categoryChips" aria-label="Category filter">
+        <!-- chips injected by JS -->
+      </div>
+      <div class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/></svg>
+        <input id="searchInput" type="search" placeholder="Search titles…" autocomplete="off" />
+      </div>
+    </div>
+
+    <!-- VIDEOS GRID -->
+    <section id="pane-videos" role="tabpanel" aria-labelledby="Videos" class="grid" data-mode="videos">
+      <!-- Example categories: Technology, Music, Sports, Education -->
+      
+      <!-- Technology -->
+      <article class="card" data-category="Technology" data-title="Build a REST API in 5 Minutes">
+        <div class="thumb">
+          <iframe src="https://www.youtube.com/embed/1zkgdLZEdwM" title="Build a REST API in 5 Minutes" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="meta">
+          <span class="title">Build a REST API in 5 Minutes</span>
+          <span class="badge">Technology</span>
+        </div>
+      </article>
+
+      <article class="card" data-category="Technology" data-title="React in 100 Seconds">
+        <div class="thumb">
+          <iframe src="https://www.youtube.com/embed/Tn6-PIqc4UM" title="React in 100 Seconds" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="meta">
+          <span class="title">React in 100 Seconds</span>
+          <span class="badge">Technology</span>
+        </div>
+      </article>
+
+      <!-- Music -->
+      <article class="card small" data-category="Music" data-title="Best of Lo-Fi Hip Hop">
+        <div class="thumb">
+          <iframe src="https://www.youtube.com/embed/jfKfPfyJRdk" title="LoFi Girl live" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="meta">
+          <span class="title">Lo‑Fi Beats (Live)</span>
+          <span class="badge">Music</span>
+        </div>
+      </article>
+
+      <article class="card small" data-category="Music" data-title="Relaxing Piano">
+        <div class="thumb">
+          <iframe src="https://www.youtube.com/embed/MkNeIUgNPQ8" title="Relaxing Piano Music" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="meta">
+          <span class="title">Relaxing Piano</span>
+          <span class="badge">Music</span>
+        </div>
+      </article>
+
+      <!-- Sports -->
+      <article class="card" data-category="Sports" data-title="Top Football Goals">
+        <div class="thumb">
+          <iframe src="https://www.youtube.com/embed/r5wY2bR6VYQ" title="Top Football Goals" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="meta">
+          <span class="title">Top Football Goals</span>
+          <span class="badge">Sports</span>
+        </div>
+      </article>
+
+      <article class="card" data-category="Sports" data-title="Basketball Dunks Compilation">
+        <div class="thumb">
+          <iframe src="https://www.youtube.com/embed/l9cQ4R6p0rA" title="Best Dunks" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="meta">
+          <span class="title">Best Dunks Compilation</span>
+          <span class="badge">Sports</span>
+        </div>
+      </article>
+
+      <!-- Education -->
+      <article class="card" data-category="Education" data-title="Physics Explained in 10 Minutes">
+        <div class="thumb">
+          <iframe src="https://www.youtube.com/embed/1TKSfAkWWN0" title="Physics in 10 Minutes" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="meta">
+          <span class="title">Physics in 10 Minutes</span>
+          <span class="badge">Education</span>
+        </div>
+      </article>
+
+      <article class="card" data-category="Education" data-title="History of the Internet">
+        <div class="thumb">
+          <iframe src="https://www.youtube.com/embed/UlJku_CSyNg" title="History of the Internet" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="meta">
+          <span class="title">History of the Internet</span>
+          <span class="badge">Education</span>
+        </div>
+      </article>
+    </section>
+
+    <!-- AUDIO GRID (YouTube embeds used as audio tracks/playlists) -->
+    <section id="pane-audio" role="tabpanel" aria-labelledby="Audio" class="grid hidden" data-mode="audio">
+      <!-- Podcasts -->
+      <article class="card" data-category="Podcasts" data-title="Tech Podcast: AI Trends">
+        <div class="thumb">
+          <iframe src="https://www.youtube.com/embed/2ePf9rue1Ao" title="AI Trends Podcast" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="meta">
+          <span class="title">AI Trends — Podcast</span>
+          <span class="badge">Podcasts</span>
+        </div>
+      </article>
+
+      <article class="card" data-category="Podcasts" data-title="Business & Startups Podcast">
+        <div class="thumb">
+          <iframe src="https://www.youtube.com/embed/3qHkcs3kG44" title="Business Podcast" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="meta">
+          <span class="title">Business & Startups</span>
+          <span class="badge">Podcasts</span>
+        </div>
+      </article>
+
+      <!-- Lo‑Fi / Focus -->
+      <article class="card small" data-category="Lo‑Fi / Focus" data-title="LoFi Study Mix">
+        <div class="thumb">
+          <iframe src="https://www.youtube.com/embed/5qap5aO4i9A" title="LoFi Study Mix" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="meta">
+          <span class="title">Lo‑Fi Study Mix</span>
+          <span class="badge">Lo‑Fi / Focus</span>
+        </div>
+      </article>
+
+      <article class="card small" data-category="Lo‑Fi / Focus" data-title="Deep Focus Ambient">
+        <div class="thumb">
+          <iframe src="https://www.youtube.com/embed/hHW1oY26kxQ" title="Deep Focus Ambient" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="meta">
+          <span class="title">Deep Focus Ambient</span>
+          <span class="badge">Lo‑Fi / Focus</span>
+        </div>
+      </article>
+
+      <!-- Nature / Calm -->
+      <article class="card" data-category="Nature / Calm" data-title="Rain Sounds for Sleep">
+        <div class="thumb">
+          <iframe src="https://www.youtube.com/embed/pL2qFVV9KFU" title="Rain Sounds for Sleep" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="meta">
+          <span class="title">Rain Sounds for Sleep</span>
+          <span class="badge">Nature / Calm</span>
+        </div>
+      </article>
+
+      <article class="card" data-category="Nature / Calm" data-title="Ocean Waves 10 Hours">
+        <div class="thumb">
+          <iframe src="https://www.youtube.com/embed/BQ9YtJC-Kd8" title="Ocean Waves 10 Hours" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="meta">
+          <span class="title">Ocean Waves — 10 Hours</span>
+          <span class="badge">Nature / Calm</span>
+        </div>
+      </article>
+    </section>
+
+    <footer class="soft">Tip: Use the tabs to switch between Videos and Audio. Filter by category or search titles.</footer>
+  </div>
+
+  <script>
+    // ====== Dynamic Category Chips + Filtering ======
+    const panes = {
+      videos: document.getElementById('pane-videos'),
+      audio: document.getElementById('pane-audio'),
+    };
+
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(t => t.addEventListener('click', () => {
+      tabs.forEach(x => x.setAttribute('aria-selected','false'));
+      t.setAttribute('aria-selected','true');
+      const target = t.dataset.pane;
+      for (const k in panes){
+        panes[k].classList.toggle('hidden', k !== target);
+      }
+      buildChips();
+      applyFilters();
+    }));
+
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', applyFilters);
+
+    const chipsWrap = document.getElementById('categoryChips');
+    chipsWrap.addEventListener('click', (e) => {
+      const c = e.target.closest('.chip');
+      if(!c) return;
+      if(c.dataset.cat === 'all'){
+        // clear all
+        chipsWrap.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
+        c.classList.add('active');
+      } else {
+        chipsWrap.querySelector('[data-cat="all"]').classList.remove('active');
+        c.classList.toggle('active');
+        const anyActive = [...chipsWrap.querySelectorAll('.chip')].some(x=>x.dataset.cat!=='all' && x.classList.contains('active'));
+        if(!anyActive){
+          chipsWrap.querySelector('[data-cat="all"]').classList.add('active');
+        }
+      }
+      applyFilters();
+    });
+
+    function currentPane(){
+      return document.querySelector('.tab[aria-selected="true"]').dataset.pane;
+    }
+
+    function buildChips(){
+      const paneEl = panes[currentPane()];
+      const items = [...paneEl.querySelectorAll('.card')];
+      const cats = Array.from(new Set(items.map(i => i.dataset.category)));
+      chipsWrap.innerHTML = '';
+      // "All" chip
+      const all = document.createElement('button');
+      all.className = 'chip active';
+      all.textContent = 'All';
+      all.setAttribute('data-cat','all');
+      chipsWrap.appendChild(all);
+      // Category chips
+      cats.forEach(cat => {
+        const b = document.createElement('button');
+        b.className = 'chip';
+        b.textContent = cat;
+        b.setAttribute('data-cat', cat);
+        chipsWrap.appendChild(b);
+      });
+    }
+
+    function applyFilters(){
+      const paneEl = panes[currentPane()];
+      const query = searchInput.value.trim().toLowerCase();
+      const activeCats = [...chipsWrap.querySelectorAll('.chip.active')]
+        .map(c => c.dataset.cat)
+        .filter(c => c !== 'all');
+
+      paneEl.querySelectorAll('.card').forEach(card => {
+        const inCat = activeCats.length === 0 || activeCats.includes(card.dataset.category);
+        const inSearch = card.dataset.title.toLowerCase().includes(query);
+        card.classList.toggle('hidden', !(inCat && inSearch));
+      });
+    }
+
+    // Initialize
+    buildChips();
+  </script>
+</body>
+</html>
